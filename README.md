@@ -186,4 +186,50 @@ Since this dataset consists of images, our data preparation will be geared towar
 - Embeddings
   - It may also be worthwhile to use a denoising autoencoder to compress the images into a smaller dimension vector to use as the model’s input to improve training speeds.
 
+# **Deliverable 3**
+
+## **FIRST CHOICE - HEART DISEASE PREDICTION**
+ 
+### **ANALYTICS AND MACHINE LEARNING** 
+The analytics and machine learning involved in the heart disease dataset are as follows:
+1. Data preprocessing: This involves cleaning and transforming the raw data to make it ready for analysis. In this dataset, preprocessing involved dropping missing values and one-hot encoding the categorical variables.
+2. Exploratory data analysis: This is the process of analyzing and visualizing data to gather insights into patterns and relationships. In this dataset, EDA involved creating various plots and visualizations to understand the distribution and relationships between variables.
+3. Feature scaling: This is a technique used to standardize the range of independent variables of the data. In this dataset, feature scaling was performed using the StandardScaler from scikit-learn library to normalize the continuous variables.
+4. Model selection: This involves choosing the appropriate machine learning model that best fits the dataset. In this dataset, logistic regression, decision tree, and random forest models were selected.
+5. Model evaluation: This is the process of testing the performance of the selected model using various evaluation metrics. In this dataset, accuracy, precision, recall, f1-score, and ROC AUC score were used to evaluate the performance of the models.
+
+### **EVALUATION AND OPTIMIZATION** 
+***Scikit-Learn***
+
+The data is first preprocessed by reading the heart disease dataset from Amazon S3 and preprocesses it by dropping rows with missing values, one-hot encoding the categorical features, and combining the encoded categorical columns with the continuous columns. The preprocessed dataset is then split into training and testing sets using the training function. The continuous features of the dataset are scaled using StandardScaler. The data is then trained using classification models, Logistic Regression and Decision Tree, on the preprocessed dataset and their performance are evaluated using cross-validation and various performance metrics such as accuracy, precision, recall, f1-score, and ROC AUC score. Hyperparameter Tuning is done for the dataset using sklearn to search for the best hyperparameters.
+
+***Pytorch***
+
+As a comparison, we also ran the data using pytorch in a deep neural network. The benefit of pytorch over sklearn is that it allows the network to be more customizable and can utilize the GPU offered by the AWS Sagemaker notebook space for faster training times.
+
+Similar to before, the data is preprocessed in the same way - utilizing scikit-learn’s Standard Scaler. The dataset was split 80% for the training data and 20% for the test data. The model used a learning rate of .0001, an Adam optimizer, an MSE loss function, and was trained over a course of 1,000 epochs.
+
+Throughout various tests, the model was changed and altered in an effort to optimize it. This included things like reducing the number of layers, trying different activation functions, and applying dropout. The final model used ReLU activation functions and was 4 layers deep.
+After training the model, the model was then evaluated on the dataset as a whole and another evaluation on the test data, which the model had never seen before.
+
+### **RESULTS**
+
+For the scikit-learn implementation, evaluation metrics like ROC AUC score, F1 score, accuracy, precision and recall are calculated in this model. These metrics are used to evaluate the performance of three different models like Logistic Regression, Decision tree and Random Forest Classifiers. The evaluation metrics are calculated and printed for each model.
+
+In the pytorch implementation, the accuracy of the model averaged at around 75%, regardless of the hyperparameters used at the time, performing similarly to scikit-learn’s decision tree classifier. We attribute the neural network’s performance due to the relatively small dataset as well as its hyperparameters which haven’t been optimized to the fullest yet.
+
+In the neural network dropout is typically used to prevent overfitting the data, however, in our model the usage of dropout tended to lower the accuracy of the model. We attribute this to the neural network’s smaller size, which was effectively smaller with the usage of dropout and lowered the model’s consistent learning capabilities.
+
+### **FUTURE WORKS AND COMMENTS**
+
+Each of the machine learning algorithms used in this project has a number of hyperparameters that can be tuned to optimize performance. The dataset contains a number of features that may be useful in predicting heart disease, there may be additional features that could improve the performance of the model. Our future work for the project is to find and engineer these features. 
+
+1. Heart disease is unique as it contains a combination of both categorical and numerical features. It also includes information on whether a patient has a heart disease or not. The heart disease dataset has some imbalance like the patients without heart disease are high in number compared to the patients with heart disease. So, to address this, we have used Random Forest Classifier. We performed several data cleaning steps, including removing duplicates, checking for missing values, and removing irrelevant columns. We also converted categorical variables into numerical ones using one-hot encoding. We performed outlier treatment by using boxplots and scatterplots to identify extreme values and removed them based on domain knowledge. 
+
+2. The analysis was focused mainly on the existing features and variables in the dataset. Using feature engineering, we have combined the attributes like age and gender to form a separate feature. 
+3. The evaluation process for the heart disease dataset involved using five different evaluation metrics for each of the three models - Logistic Regression, Decision Tree, and Random Forest. The metrics used were accuracy, precision, recall, F1 score, and ROC AUC score. The dataset was split into training and testing sets. The continuous features were scaled using StandardScaler. One-hot encoding was applied to the categorical features. The best result was obtained with the Random Forest model, which had a mean cross-validation accuracy score of 0.839 and an accuracy score of 0.836 on the test set. The precision score was 0.88, the recall score was 0.75, the F1 score was 0.81, and the ROC AUC score was 0.84. 
+4. The target variable in this dataset is imbalanced since there are more instances for the patients without heart disease rather than patients with heart disease. This can lead to a model that is biased towards the majority class. To overcome this, different evaluation metrics are used to address this issue. Model selection is another challenge as there are many machine learning algorithms that can be used to predict heart disease in this dataset. Choosing the best algorithm for the task can be a difficult process that requires experimentation and comparison of different models. 
+5. Although the dataset includes many relevant features, there may be additional variables that could be created to capture more information about patients' health status. For example, researchers could look at other biomarkers like the  homocysteine levels and incorporate data from wearable sensors or other technologies. Even though the models used in this project achieved relatively high accuracy, there may be opportunities to further improve their performance through hyperparameter tuning or other optimization techniques.
+6. The code splits the data into training and testing sets, encodes the categorical features, and trains and evaluates three different models which are Logistic Regression, Decision Tree, and Random Forest, the individual can modify the code to try different models to see if they can achieve better performance.  To use the trained model on new data, the individual can replace the x_test and y_test variables with their own data and call the predict() method on the trained model to obtain predictions.
+7. Regarding the neural network, it’s long-term accuracy and optimization relies more on the overall architecture of the model rather than the hyperparameters. Due to inexperience and time constraints, the network is lacking in terms of state-of-the-art architecture implementations. In future work improvements to the architecture like utilizing residual and attention blocks, as well as other deep learning innovations, can definitely be used to improve the model’s long-term performance.
 
